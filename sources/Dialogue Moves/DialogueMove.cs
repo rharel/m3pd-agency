@@ -165,7 +165,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         public override string ToString()
         {
             return $"{nameof(DialogueMove<T>)}{{ " +
-                   $"{nameof(Type)} = {Type}, " +
+                   $"{nameof(Type)} = '{Type}', " +
                    $"{nameof(Properties)} = {Properties} }}";
         }
     }
