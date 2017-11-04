@@ -18,6 +18,9 @@ namespace rharel.M3PD.Agency.Modules
         /// <returns>
         /// True iff now is a valid time to realize the specified move.
         /// </returns>
+        /// <remarks>
+        /// This will never be given the idle move as an argument.
+        /// </remarks>
         public abstract bool IsValidMoveNow(DialogueMove move);
 
         /// <summary>
