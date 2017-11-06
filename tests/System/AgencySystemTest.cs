@@ -69,16 +69,9 @@ namespace rharel.M3PD.Agency.System.Tests
                 new Mock<SUModule>()
             );
 
-            public override void PerformUpdate(
-                RecentActivity recent_activity, 
-                CurrentActivity current_activity, 
-                SystemActivity system_activity,
-                StateMutator state_mutator)
+            public override void PerformUpdate(StateMutator state_mutator)
             {
-                Mock.Object.PerformUpdate(
-                    recent_activity, current_activity, system_activity,
-                    state_mutator
-                );
+                Mock.Object.PerformUpdate(state_mutator);
             }
         }
         private sealed class MockASModule: ASModule
@@ -191,23 +184,9 @@ namespace rharel.M3PD.Agency.System.Tests
         [Test]
         public void Test_ModuleInvocation_StateUpdate()
         {
-            var system_activity = new SystemActivity(
-                _system.RecentMove,
-                _system.TargetMove,
-                _system.IsActive
-            );
-
             _system.Step();
 
-            _SU.Mock.Verify(
-                x => x.PerformUpdate(
-                    _RAP.Output, 
-                    _CAP.Output, 
-                    system_activity,
-                    _state
-                ), 
-                Times.Once
-            );
+            _SU.Mock.Verify(x => x.PerformUpdate(_state), Times.Once);
         }
         [Test]
         public void Test_ModuleInvocation_ActionSelection()
@@ -243,6 +222,38 @@ namespace rharel.M3PD.Agency.System.Tests
             );
         }
 
+        [Test]
+        public void Test_Step_StatePropertyUpdate()
+        {
+            var @event = new DialogueEvent("mock id", TARGET_MOVE);
+            _RAP.Output.Add(@event);
+
+            string active_id = "active_id", 
+                   passive_id = "passive_id";
+            _CAP.Output.MarkActive(active_id);
+            _CAP.Output.MarkPassive(passive_id);
+
+            var system_activity = new SystemActivity(
+                _system.RecentMove,
+                _system.TargetMove,
+                _system.IsActive
+            );
+
+            _system.Step();
+
+            Assert.AreEqual(1, _state.RecentActivity.Events.Count);
+            Assert.IsTrue(_state.RecentActivity.Events.Contains(@event));
+
+            Assert.AreEqual(1, _state.CurrentActivity.PassiveIDs.Count);
+            Assert.IsTrue(
+                _state.CurrentActivity.PassiveIDs.Contains(passive_id)
+            );
+            Assert.AreEqual(1, _state.CurrentActivity.ActiveIDs.Count);
+            Assert.IsTrue(
+                _state.CurrentActivity.ActiveIDs.Contains(active_id)
+            );
+            Assert.AreEqual(system_activity, _state.SystemActivity);
+        }
         [Test]
         public void Test_Step_WithNullTargetMove()
         {
