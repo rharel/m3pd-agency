@@ -21,6 +21,10 @@ namespace rharel.M3PD.Agency.State
     /// available on a given state object is specified during construction, and 
     /// can be queried through the <see cref="ComponentIDs"/> property.
     /// </para>
+    /// <para>
+    /// Components identifiers prefixed with an _underscore should be 
+    /// considered reserved.
+    /// </para>
     /// </remarks>
     public sealed class InformationState: StateAccessor, StateMutator
     {
