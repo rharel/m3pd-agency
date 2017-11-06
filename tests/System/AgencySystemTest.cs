@@ -22,21 +22,19 @@ namespace rharel.M3PD.Agency.System.Tests
             );
 
             public int InvocationCount { get; private set; } = 0;
-            public RecentActivity SubmittedReport { get; private set; }
+            public RecentActivity Output { get; set; } = (
+                new RecentActivity()
+            );
 
             protected override void ComposeActivityReport(
                 RecentActivity report)
             {
-                var mock_report = Mock.Object.PerceiveActivity();
-                
-                foreach (var @event in mock_report.Events)
+                foreach (var @event in Output.Events)
                 {
                     report.Add(@event);
                 }
 
                 ++ InvocationCount;
-                SubmittedReport = report;
-
             }
         }
         private sealed class MockCAPModule: CAPModule
@@ -46,24 +44,23 @@ namespace rharel.M3PD.Agency.System.Tests
             );
 
             public int InvocationCount { get; private set; } = 0;
-            public CurrentActivity SubmittedReport { get; private set; }
+            public CurrentActivity Output { get; set; } = (
+                new CurrentActivity()
+            );
 
             protected override void ComposeActivityReport(
                 CurrentActivity report)
             {
-                var mock_report = Mock.Object.PerceiveActivity();
-
-                foreach (var agent in mock_report.ActiveIDs)
+                foreach (var agent in Output.ActiveIDs)
                 {
                     report.MarkActive(agent);
                 }
-                foreach (var agent in mock_report.PassiveIDs)
+                foreach (var agent in Output.PassiveIDs)
                 {
                     report.MarkPassive(agent);
                 }
 
                 ++ InvocationCount;
-                SubmittedReport = report;
             }
         }
         private sealed class MockSUModule: SUModule
@@ -204,8 +201,8 @@ namespace rharel.M3PD.Agency.System.Tests
 
             _SU.Mock.Verify(
                 x => x.PerformUpdate(
-                    _RAP.SubmittedReport, 
-                    _CAP.SubmittedReport, 
+                    _RAP.Output, 
+                    _CAP.Output, 
                     system_activity,
                     _state
                 ), 
