@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Linq;
 
 namespace rharel.M3PD.Agency.Dialogue_Moves.Tests
 {
@@ -11,25 +12,48 @@ namespace rharel.M3PD.Agency.Dialogue_Moves.Tests
         private sealed class Bar { }
 
         private static readonly string TYPE = "mock_type";
-        private static readonly string PROPERTIES = "mock_properties";
+        private static readonly Foo PROPERTIES = new Foo();
+        private static readonly string ADDRESSEE = "alice";
+        private static readonly string[] ADDRESSEES =
+        {
+            "alice", "bob", "charlie"
+        };
 
         [Test]
         public void Test_Constructor_WithInvalidArgs()
         {
             Assert.Throws<ArgumentNullException>(
-                () => new DialogueMove<string>(null, PROPERTIES)
+                () => DialogueMoves.Create(null, PROPERTIES)
             );
             Assert.Throws<ArgumentException>(
-                () => new DialogueMove<string>(" ", PROPERTIES)
+                () => DialogueMoves.Create(" ", PROPERTIES)
             );
-            Assert.Throws<ArgumentNullException>(
-                () => new DialogueMove<string>(TYPE, null)
+            Assert.Throws<ArgumentException>(
+                () => DialogueMoves.Create(TYPE, " ")
             );
+        }
+        [Test]
+        public void Test_Constructor_WithAddresee()
+        {
+            var move = DialogueMoves.Create(TYPE, ADDRESSEE);
+
+            Assert.AreEqual(TYPE, move.Type);
+            Assert.IsTrue(move.AddresseeIDs.Contains(ADDRESSEE));
+        }
+        [Test]
+        public void Test_Constructor_WithAddresees()
+        {
+            var move = DialogueMoves.Create(TYPE, ADDRESSEES);
+
+            Assert.AreEqual(TYPE, move.Type);
+            Assert.IsTrue(ADDRESSEES.All(
+                value => move.AddresseeIDs.Contains(value)
+            ));
         }
         [Test]
         public void Test_Constructor_WithoutProperties()
         {
-            var move = new DialogueMove<string>(TYPE);
+            var move = DialogueMoves.Create(TYPE);
 
             Assert.AreEqual(TYPE, move.Type);
             Assert.IsTrue(move.Properties.IsNone);
@@ -37,7 +61,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves.Tests
         [Test]
         public void Test_Constructor_WithProperties()
         { 
-            var move = new DialogueMove<string>(TYPE, PROPERTIES);
+            var move = DialogueMoves.Create(TYPE, PROPERTIES);
 
             Assert.AreEqual(TYPE, move.Type);
             Assert.IsTrue(move.Properties.Contains(PROPERTIES));
@@ -47,13 +71,13 @@ namespace rharel.M3PD.Agency.Dialogue_Moves.Tests
         public void Test_Cast_ToInvalidType()
         {
             Assert.Throws<InvalidCastException>(
-                () => new DialogueMove<Foo>(TYPE, new Foo()).Cast<Bar>()
+                () => DialogueMoves.Create(TYPE, new Foo()).Cast<Bar>()
             );
         }
         [Test]
         public void Test_Cast_Up()
         {
-            var source = new DialogueMove<FooDerived>(TYPE, new FooDerived());
+            var source = DialogueMoves.Create(TYPE, new FooDerived());
             var target = source.Cast<Foo>();
 
             Assert.AreEqual(TYPE, target.Type);
@@ -62,7 +86,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves.Tests
         [Test]
         public void Test_Cast_Down()
         {
-            var source = new DialogueMove<Foo>(TYPE, new FooDerived());
+            var source = DialogueMoves.Create(TYPE, new FooDerived());
             var target = source.Cast<FooDerived>();
 
             Assert.AreEqual(TYPE, target.Type);
@@ -72,18 +96,18 @@ namespace rharel.M3PD.Agency.Dialogue_Moves.Tests
         [Test]
         public void Test_Equality()
         {
-            var original = new DialogueMove<string>(TYPE, PROPERTIES);
-            var good_copy = new DialogueMove<string>(
+            var original = DialogueMoves.Create(TYPE, PROPERTIES);
+            var good_copy = DialogueMoves.Create(
                 original.Type, original.Properties.Unwrap()
             );
             var flawed_type_copy = (
-                new DialogueMove<string>(
+                DialogueMoves.Create(
                     $"other {original.Type}", 
                     original.Properties.Unwrap()
                 )
             );
             var flawed_properties_copy = (
-                new DialogueMove<string>(
+                DialogueMoves.Create(
                     original.Type,
                     $"other {original.Properties.Unwrap()}"
                 )
@@ -101,8 +125,8 @@ namespace rharel.M3PD.Agency.Dialogue_Moves.Tests
         public void Test_Equality_WhenCast()
         {
             Assert.AreEqual(
-                new DialogueMove<object>(TYPE, PROPERTIES),
-                new DialogueMove<string>(TYPE, PROPERTIES)
+                DialogueMoves.Create(TYPE, PROPERTIES),
+                DialogueMoves.Create(TYPE, PROPERTIES)
             );
         }
     }
