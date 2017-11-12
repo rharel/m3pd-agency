@@ -18,14 +18,21 @@ namespace rharel.M3PD.Agency.Modules
         /// </param>
         /// <param name="move">The move that was realized.</param>
         /// <exception cref="ArgumentNullException">
-        /// When either <paramref name="source_id"/> or 
-        /// <paramref name="move"/> is null.
+        /// When <paramref name="source_id"/> is null.
+        /// When <paramref name="move"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="source_id"/> is blank.
         /// </exception>
         public DialogueEvent(string source_id, DialogueMove move)
         {
             if (source_id == null)
             {
                 throw new ArgumentNullException(nameof(source_id));
+            }
+            if (source_id.Trim().Length == 0)
+            {
+                throw new ArgumentException(nameof(source_id));
             }
             if (move == null)
             {

@@ -30,6 +30,9 @@ namespace rharel.M3PD.Agency.Modules.Tests
             Assert.Throws<ArgumentNullException>(
                 () => new DialogueEvent(SOURCE_ID, null)
             );
+            Assert.Throws<ArgumentException>(
+                () => new DialogueEvent("", MOVE)
+            );
         }
         [Test]
         public void Test_Constructor()
