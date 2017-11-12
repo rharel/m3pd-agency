@@ -32,13 +32,16 @@ namespace rharel.M3PD.Agency.Modules.Tests
         }
 
         [Test]
-        public void Test_Add_Indirect_WithInvalidArgs()
+        public void Test_Add_WithInvalidArgs()
         {
             Assert.Throws<ArgumentNullException>(
                 () => _report.Add(null, GREETING)
             );
             Assert.Throws<ArgumentNullException>(
                 () => _report.Add(ALICE_ID, null)
+            );
+            Assert.Throws<ArgumentNullException>(
+                () => _report.Add(null)
             );
         }
         [Test]

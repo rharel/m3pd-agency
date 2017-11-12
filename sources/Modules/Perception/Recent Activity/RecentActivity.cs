@@ -62,6 +62,9 @@ namespace rharel.M3PD.Agency.Modules
         /// <returns>
         /// True iff the event was added successfully.
         /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="event"/> is null.
+        /// </exception>
         /// <remarks>
         /// An addition is unsuccessful when either the event has already been
         /// submitted before, or if it contains the idle move (an idle move is
@@ -69,6 +72,10 @@ namespace rharel.M3PD.Agency.Modules
         /// </remarks>
         public bool Add(DialogueEvent @event)
         {
+            if (@event == null)
+            {
+                throw new ArgumentNullException(nameof(@event));
+            }
             return !@event.Move.IsIdle() && _events.Add(@event);
         }
 

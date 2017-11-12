@@ -8,7 +8,7 @@ namespace rharel.M3PD.Agency.Modules
     /// Represents the perceived event of a dialogue move having been fully 
     /// realized.
     /// </summary>
-    public struct DialogueEvent
+    public sealed class DialogueEvent
     {
         /// <summary>
         /// Creates a new event.
