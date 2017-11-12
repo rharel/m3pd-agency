@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using rharel.Functional;
 
 namespace rharel.M3PD.Agency.Dialogue_Moves.Tests
 {
@@ -11,7 +10,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves.Tests
         {
             Assert.IsNotNull(Idle.Instance);
             Assert.AreEqual("idle", Idle.Instance.Type);
-            Assert.IsTrue(Idle.Instance.Properties.IsNone());
+            Assert.IsTrue(Idle.Instance.Properties.IsNone);
         }
     }
 }

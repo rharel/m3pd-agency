@@ -1,6 +1,7 @@
 ﻿using rharel.Functional;
 using rharel.M3PD.Common.Hashing;
 using System;
+using static rharel.Functional.Option;
 
 namespace rharel.M3PD.Agency.Dialogue_Moves
 {
@@ -53,7 +54,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         /// <exception cref="ArgumentException">
         /// When <paramref name="type"/> is blank.
         /// </exception>
-        public DialogueMove(string type): this(type, new None<T>()) { }
+        public DialogueMove(string type): this(type, None<T>()) { }
         /// <summary>
         /// Creates a new move of the specified type and properties.
         /// </summary>
@@ -67,7 +68,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         /// When <paramref name="type"/> is blank.
         /// </exception>
         public DialogueMove(string type, T properties): 
-            this(type, new Some<T>(properties)) { }
+            this(type, Some(properties)) { }
         /// <summary>
         /// Creates a new move of the specified type and properties.
         /// </summary>

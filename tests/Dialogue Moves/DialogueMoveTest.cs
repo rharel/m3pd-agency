@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using rharel.Functional;
 using System;
 
 namespace rharel.M3PD.Agency.Dialogue_Moves.Tests
@@ -33,7 +32,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves.Tests
             var move = new DialogueMove<string>(TYPE);
 
             Assert.AreEqual(TYPE, move.Type);
-            Assert.IsTrue(move.Properties.IsNone());
+            Assert.IsTrue(move.Properties.IsNone);
         }
         [Test]
         public void Test_Constructor_WithProperties()

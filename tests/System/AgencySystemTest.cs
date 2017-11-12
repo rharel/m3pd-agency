@@ -1,6 +1,5 @@
 ﻿using Moq;
 using NUnit.Framework;
-using rharel.Functional;
 using rharel.M3PD.Agency.Dialogue_Moves;
 using rharel.M3PD.Agency.Modules;
 using rharel.M3PD.Agency.State;
@@ -300,7 +299,7 @@ namespace rharel.M3PD.Agency.System.Tests
 
             _system.Step();
 
-            Assert.IsFalse(_system.RecentMove.IsSome());
+            Assert.IsFalse(_system.RecentMove.IsSome);
             Assert.AreEqual(TARGET_MOVE, _system.TargetMove);
             Assert.IsTrue(_system.IsActive);
         }
@@ -363,7 +362,7 @@ namespace rharel.M3PD.Agency.System.Tests
 
             _system.Step();
 
-            Assert.IsFalse(_system.RecentMove.IsSome());
+            Assert.IsFalse(_system.RecentMove.IsSome);
             Assert.AreEqual(target_move_b, _system.TargetMove);
             Assert.IsTrue(_system.IsActive);
         }

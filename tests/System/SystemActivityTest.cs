@@ -3,6 +3,7 @@ using NUnit.Framework;
 using rharel.Functional;
 using rharel.M3PD.Agency.Dialogue_Moves;
 using System;
+using static rharel.Functional.Option;
 
 namespace rharel.M3PD.Agency.System.Tests
 {
@@ -10,7 +11,7 @@ namespace rharel.M3PD.Agency.System.Tests
     public sealed class SystemActivityTest
     {
         private static readonly Optional<DialogueMove> RECENT_MOVE = (
-            new Some<DialogueMove>(new Mock<DialogueMove>().Object)
+            Some(new Mock<DialogueMove>().Object)
         );
         private static readonly DialogueMove TARGET_MOVE = (
             new Mock<DialogueMove>().Object
@@ -30,9 +31,6 @@ namespace rharel.M3PD.Agency.System.Tests
         [Test]
         public void Test_Construcor_WithInvalidArgs()
         {
-            Assert.Throws<ArgumentNullException>(
-                () => new SystemActivity(null, TARGET_MOVE, IS_ACTIVE)
-            );
             Assert.Throws<ArgumentNullException>(
                 () => new SystemActivity(RECENT_MOVE, null, IS_ACTIVE)
             );
@@ -55,7 +53,7 @@ namespace rharel.M3PD.Agency.System.Tests
                 original.IsActive
             );
             var flawed_recent_move_copy = new SystemActivity(
-                new None<DialogueMove>(),
+                None<DialogueMove>(),
                 original.TargetMove,
                 original.IsActive
             );
