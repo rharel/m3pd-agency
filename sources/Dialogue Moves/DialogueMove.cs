@@ -304,7 +304,6 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         /// <returns>A new move.</returns>
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="type"/> is null.
-        /// When <paramref name="addressee"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// When <paramref name="type"/> is blank.
@@ -330,7 +329,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         /// </exception>
         /// <exception cref="ArgumentException">
         /// When <paramref name="type"/> is blank.
-        /// When <paramref name="addressees"/> is blank or contains blank.
+        /// When <paramref name="addressees"/> contains blank.
         /// </exception>
         public static DialogueMove Create(
             string type, IEnumerable<string> addressees)
@@ -353,7 +352,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         /// </exception>
         /// <exception cref="ArgumentException">
         /// When <paramref name="type"/> is blank.
-        /// When <paramref name="addressees"/> is blank or contains blank.
+        /// When <paramref name="addressees"/> contains blank.
         /// </exception>
         public static DialogueMove Create(
             string type, params string[] addressees)
@@ -375,7 +374,6 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         /// <returns>A new move.</returns>
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="type"/> is null.
-        /// When <paramref name="addressee"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// When <paramref name="type"/> is blank.
@@ -405,7 +403,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         /// </exception>
         /// <exception cref="ArgumentException">
         /// When <paramref name="type"/> is blank.
-        /// When <paramref name="addressees"/> is blank or contains blank.
+        /// When <paramref name="addressees"/> contains blank.
         /// </exception>
         public static DialogueMove<T> Create<T>(
             string type, T properties, IEnumerable<string> addressees)
@@ -431,7 +429,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         /// </exception>
         /// <exception cref="ArgumentException">
         /// When <paramref name="type"/> is blank.
-        /// When <paramref name="addressees"/> is blank or contains blank.
+        /// When <paramref name="addressees"/> contains blank.
         /// </exception>
         public static DialogueMove<T> Create<T>(
             string type, T properties, params string[] addressees)
