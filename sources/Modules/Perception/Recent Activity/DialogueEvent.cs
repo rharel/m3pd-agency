@@ -93,7 +93,7 @@ namespace rharel.M3PD.Agency.Modules
         public override string ToString()
         {
             return $"{nameof(DialogueEvent)}{{ " +
-                   $"{nameof(SourceID)} = {SourceID}, " +
+                   $"{nameof(SourceID)} = '{SourceID}', " +
                    $"{nameof(Move)} = {Move} }}";
         }
     }
