@@ -42,7 +42,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
     /// <see cref="DialogueMove"/> for the non-generic version and additional
     /// details.
     /// </remarks>
-    public struct DialogueMove<T>: DialogueMove
+    public sealed class DialogueMove<T>: DialogueMove
     {
         /// <summary>
         /// Creates a new move of the specified type.
