@@ -45,12 +45,12 @@ namespace rharel.M3PD.Agency.Modules
         /// <summary>
         /// Gets the identifier of the agent who realized the move.
         /// </summary>
-        public string SourceID { get; private set; }
+        public string SourceID { get; }
 
         /// <summary>
         /// Gets the realized move.
         /// </summary>
-        public DialogueMove Move { get; private set; }
+        public DialogueMove Move { get; }
 
         /// <summary>
         /// Determines whether the specified object is equal to this instance.

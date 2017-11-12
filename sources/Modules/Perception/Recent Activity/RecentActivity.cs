@@ -21,7 +21,7 @@ namespace rharel.M3PD.Agency.Modules
         /// <summary>
         /// Gets the collection of reported events.
         /// </summary>
-        public ImmutableCollection<DialogueEvent> Events { get; private set; }
+        public ImmutableCollection<DialogueEvent> Events { get; }
 
         /// <summary>
         /// Creates a <see cref="DialogueEvent"/> from the 
